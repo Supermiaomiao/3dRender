@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Axe Renderer</title>
+        <style>
+        </style>
+        <title>Axe Renderer</title>
+        <link href='http://fonts.font.im/css?family=Orbitron' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="./assets/index.css">
+        <script src="./assets/slider.js"></script>
+        <!-- 引入所有用到的文件 -->
+        <script src='renderer/config.js'></script>
+        <script src='renderer/gua_object.js'></script>
+        <script src='renderer/utils.js'></script>
+        <script src='renderer/vector.js'></script>
+        <script src='renderer/vertex.js'></script>
+        <script src='renderer/color.js'></script>
+        <script src='renderer/string/axe3dString.js'></script>
+        <script src='renderer/string/chestImage.js'></script>
+        <script src='renderer/string/chest3d.js'></script>
+        <script src='renderer/string/illidanGua3d.js'></script>
+        <script src='renderer/string/illidanGuaImage.js'></script>
+        <script src='renderer/string/ballGua3d.js'></script>
+        <script src='renderer/matrix.js'></script>
+        <script src='renderer/axemesh.js'></script>
+        <script src='renderer/canvas.js'></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="workspace">
+                <h1><i>AXE RENDERER</i></h1>
+                <div id="id-windows" class="windows-height">
+                    <canvas id="id-canvas" width="800" height="600"></canvas>
+                    <div class="config windows-height"></div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+            const test_drawTriangle1 = function(canvas) {
+                let p1 = GuaVector.new(50, 50, 1);
+                let p2 = GuaVector.new(0, 200, 1);
+                let p3 = GuaVector.new(100, 200, 1);
+                let v1 = GuaVertex.new(p1, GuaColor.red());
+                let v2 = GuaVertex.new(p2, GuaColor.green());
+                let v3 = GuaVertex.new(p3, GuaColor.blue());
+
+                canvas.drawTriangle1(v1, v2, v3);
+                canvas.render();
+            };
+
+            const test_drawTriangle2 = function(canvas) {
+                let p1 = GuaVector.new(50, 50, 0);
+                let p2 = GuaVector.new(0, 50, 0);
+                let p3 = GuaVector.new(25, 100, 0);
+                let v1 = GuaVertex.new(p1, GuaColor.red());
+                let v2 = GuaVertex.new(p2, GuaColor.green());
+                let v3 = GuaVertex.new(p3, GuaColor.blue());
+                canvas.drawTriangle2(v1, v2, v3);
+                canvas.render();
+            }
+
+            const testDepth0 = function(canvas) {
+                let v1 = GuaVertex.new(GuaVector.new(100, 100, 1), GuaColor.red())
+                let v2 = GuaVertex.new(GuaVector.new(200, 150, 1), GuaColor.new(0, 255, 0, 255))
+                let v3 = GuaVertex.new(GuaVector.new(100, 150, 1), GuaColor.new(0, 0, 255, 255))
+
+                let v4 = GuaVertex.new(GuaVector.new(150, 100, 0), GuaColor.red())
+                let v5 = GuaVertex.new(GuaVector.new(250, 150, 0), GuaColor.new(0, 255, 0, 255))
+                let v6 = GuaVertex.new(GuaVector.new(150, 150, 0), GuaColor.black())
+
+                canvas.drawTriangle(v1, v2, v3)
+                canvas.drawTriangle(v4, v5, v6)
+
+                // 渲染出来, 不调用这个函数就不会显示结果
+                canvas.render()
+            }
+
+            const testDepth1 = (canvas) => {
+                let v1 = GuaVertex.new(GuaVector.new(130, 130, 70), GuaColor.red())
+                let v2 = GuaVertex.new(GuaVector.new(110, 170, 30), GuaColor.blue())
+                let v3 = GuaVertex.new(GuaVector.new(300, 100, 50), GuaColor.green())
+                let v4 = GuaVertex.new(GuaVector.new(100, 100, 50), GuaColor.red())
+                let v5 = GuaVertex.new(GuaVector.new(300, 100, 50), GuaColor.blue())
+                let v6 = GuaVertex.new(GuaVector.new(140, 200, 50), GuaColor.green())
+                canvas.drawTriangle(v1, v2, v3)
+                canvas.drawTriangle(v4, v5, v6)
+                canvas.render()
+            }
+            // 函数名应该用 const 修饰, 这样不会被意外修改
+            const __main = function() {
+                let canvas = GuaCanvas.new('#id-canvas')
+                // 这是一个测试函数, 给你看原理的, 只是看看
+                // canvas.__debug_draw_demo()
+                // canvas.clear()
+                initSliders()
+                // 设定光照点
+                // let light = GuaVector.new(config.light_x.value, config.light_y.value, config.light_z.value)
+
+                let v1 = GuaVertex.new(GuaVector.new(150, 10, 20), GuaColor.red())
+                let v2 = GuaVertex.new(GuaVector.new(10, 100, 30), GuaColor.blue())
+                let v3 = GuaVertex.new(GuaVector.new(300, 200, 50), GuaColor.green())
+                // canvas.drawScanline(v1, v2)
+                // canvas.drawTriangle(v1, v2, v3)
+
+                // test_drawTriangle1(canvas)
+                // test_drawTriangle2(canvas)
+                // testDepth0(canvas)
+                // testDepth1(canvas)
+
+                // let mesh = Axemesh.fromAxe3D(cones)
+                // let mesh = Axemesh.fromAxe3D(cube)
+                // let mesh = Axemesh.fromAxe3D(illidan)
+                // canvas.drawMesh(mesh)
+
+                // 箱子贴图
+                // let mesh = Axemesh.fromAxeImage(axeImageString)
+                // canvas.drawAxeImage(mesh)
+
+                // 3d 箱子
+                // let image = Axemesh.fromAxeImage(chestImage).axeImage
+                // let mesh = Axemesh.fromAxe3dWithuv(chest3d)
+                // canvas.drawMeshWithImage(mesh, image)
+
+                // illidan 3d
+                // let mesh = Axemesh.fromGua3d(illidanGua3d)
+                // let image = Axemesh.fromGuaImage(illidanGuaImage).axeImage
+                // canvas.drawMeshWithImage(mesh, image)
+
+                // 光照测试小球
+                let mesh = Axemesh.fromGua3d(ballGua3d)
+
+                // 渲染出来, 不调用这个函数就不会显示结果
+                // canvas.render()
+
+                setInterval(function () {
+                    canvas.clear()
+                   // 在这里配置
+                    canvas.camera = GuaCamera.new()
+                    mesh.rotation.x = config.rotation_x.value
+                    mesh.rotation.y = config.rotation_y.value
+                    mesh.rotation.z = config.rotation_z.value
+                    // canvas.drawMesh(mesh)
+                    canvas.drawMeshWithImage(mesh)
+                    canvas.render()
+                }, 200)
+
+            }
+
+            __main()
+        </script>
+    </body>
+</html>
