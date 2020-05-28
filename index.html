@@ -11,7 +11,7 @@
         <script src="./assets/slider.js"></script>
         <!-- 引入所有用到的文件 -->
         <script src='renderer/config.js'></script>
-        <script src='renderer/gua_object.js'></script>
+        <script src='renderer/object.js'></script>
         <script src='renderer/utils.js'></script>
         <script src='renderer/vector.js'></script>
         <script src='renderer/vertex.js'></script>
@@ -19,9 +19,9 @@
         <script src='renderer/string/axe3dString.js'></script>
         <script src='renderer/string/chestImage.js'></script>
         <script src='renderer/string/chest3d.js'></script>
-        <script src='renderer/string/illidanGua3d.js'></script>
-        <script src='renderer/string/illidanGuaImage.js'></script>
-        <script src='renderer/string/ballGua3d.js'></script>
+        <script src='renderer/string/illidan3d.js'></script>
+        <script src='renderer/string/illidanImage.js'></script>
+        <script src='renderer/string/ball3d.js'></script>
         <script src='renderer/matrix.js'></script>
         <script src='renderer/axemesh.js'></script>
         <script src='renderer/canvas.js'></script>
@@ -29,7 +29,7 @@
     <body>
         <div class="container">
             <div class="workspace">
-                <h1><i>AXE RENDERER</i></h1>
+                <h1><i>MIAO RENDERER</i></h1>
                 <div id="id-windows" class="windows-height">
                     <canvas id="id-canvas" width="800" height="600"></canvas>
                     <div class="config windows-height"></div>
@@ -124,12 +124,12 @@
                 // canvas.drawMeshWithImage(mesh, image)
 
                 // illidan 3d
-                // let mesh = Axemesh.fromGua3d(illidanGua3d)
-                // let image = Axemesh.fromGuaImage(illidanGuaImage).axeImage
+                let mesh = Axemesh.fromGua3d(illidanGua3d)
+                let image = Axemesh.fromGuaImage(illidanGuaImage).axeImage
                 // canvas.drawMeshWithImage(mesh, image)
 
                 // 光照测试小球
-                let mesh = Axemesh.fromGua3d(ballGua3d)
+                // let mesh = Axemesh.fromGua3d(ballGua3d)
 
                 // 渲染出来, 不调用这个函数就不会显示结果
                 // canvas.render()
@@ -142,7 +142,7 @@
                     mesh.rotation.y = config.rotation_y.value
                     mesh.rotation.z = config.rotation_z.value
                     // canvas.drawMesh(mesh)
-                    canvas.drawMeshWithImage(mesh)
+                    canvas.drawMeshWithImage(mesh, image)
                     canvas.render()
                 }, 200)
 
